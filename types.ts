@@ -1,11 +1,15 @@
-export enum AnalysisTab {
-  DASHBOARD = 'DASHBOARD',
-  TECH_TRENDS = 'TECH_TRENDS',
+export enum Industry {
+  ELECTRONICS = 'ELECTRONICS',
   FINANCE = 'FINANCE',
+  AI_AGENT = 'AI_AGENT'
+}
+
+export enum AnalysisView {
+  DASHBOARD = 'DASHBOARD',
+  TRENDS = 'TRENDS',
   SWOT = 'SWOT',
   FIVE_FORCES = 'FIVE_FORCES',
-  LIFE_CYCLE = 'LIFE_CYCLE',
-  AI_INSIGHTS = 'AI_INSIGHTS'
+  LIFE_CYCLE = 'LIFE_CYCLE'
 }
 
 export interface SwotItem {

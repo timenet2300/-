@@ -1,30 +1,30 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { Industry } from '../types';
 
-const lifeCycleData = [
-  { stage: '導入期', label: '量子電腦', value: 10 },
-  { stage: '成長期', label: 'AI 伺服器/HPC', value: 65 },
-  { stage: '成熟期', label: '智慧型手機/PC', value: 90 },
-  { stage: '衰退期', label: '傳統功能手機', value: 30 },
-];
-
-// Mock curve data for visualization
+// Mock curve data for visualization (shared)
 const curveData = [
-  { x: 0, y: 0, name: 'Start' },
-  { x: 20, y: 15, name: 'Introduction' },
-  { x: 40, y: 50, name: 'Growth' },
-  { x: 60, y: 85, name: 'Maturity' },
-  { x: 80, y: 95, name: 'Saturation' },
-  { x: 100, y: 70, name: 'Decline' },
+  { x: 0, y: 0 },
+  { x: 20, y: 15 },
+  { x: 40, y: 50 },
+  { x: 60, y: 85 },
+  { x: 80, y: 95 },
+  { x: 100, y: 70 },
 ];
 
-export const LifeCycle: React.FC = () => {
+interface LifeCycleProps {
+  industry: Industry;
+}
+
+export const LifeCycle: React.FC<LifeCycleProps> = ({ industry }) => {
   return (
     <div className="animate-fade-in space-y-8">
       <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold text-slate-900">產業生命週期曲線 (Industry Life Cycle)</h2>
-          <p className="text-slate-500">台灣主要電子次產業定位</p>
+          <h2 className="text-2xl font-bold text-slate-900">
+            {industry === Industry.FINANCE ? '金融產品生命週期' : '電子產業生命週期'}
+          </h2>
+          <p className="text-slate-500">產業發展階段定位</p>
         </div>
 
         <div className="h-[400px] w-full relative">
@@ -36,69 +36,87 @@ export const LifeCycle: React.FC = () => {
               <Line 
                 type="monotone" 
                 dataKey="y" 
-                stroke="#3b82f6" 
+                stroke={industry === Industry.FINANCE ? "#eab308" : "#3b82f6"} 
                 strokeWidth={4} 
                 dot={false}
               />
-              {/* Annotations */}
               <ReferenceLine x={20} stroke="#cbd5e1" strokeDasharray="3 3" label={{ position: 'top', value: '導入期', fill: '#64748b' }} />
               <ReferenceLine x={45} stroke="#cbd5e1" strokeDasharray="3 3" label={{ position: 'top', value: '成長期', fill: '#64748b' }} />
               <ReferenceLine x={70} stroke="#cbd5e1" strokeDasharray="3 3" label={{ position: 'top', value: '成熟期', fill: '#64748b' }} />
-              
-              {/* Custom dots for specific industries */}
             </LineChart>
           </ResponsiveContainer>
 
-          {/* Absolute positioned markers for better control over UI than simple chart dots */}
-          <div className="absolute top-[75%] left-[20%] transform -translate-x-1/2">
-            <div className="flex flex-col items-center group cursor-pointer">
-              <div className="w-4 h-4 bg-purple-500 rounded-full border-4 border-white shadow-md group-hover:scale-125 transition-transform"></div>
-              <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded backdrop-blur-sm">化合物半導體 (GaN/SiC)</span>
-            </div>
-          </div>
-
-          <div className="absolute top-[40%] left-[45%] transform -translate-x-1/2">
-             <div className="flex flex-col items-center group cursor-pointer">
-              <div className="w-5 h-5 bg-green-500 rounded-full border-4 border-white shadow-md group-hover:scale-125 transition-transform animate-pulse"></div>
-              <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded backdrop-blur-sm">AI 伺服器 & HPC</span>
-            </div>
-          </div>
-
-          <div className="absolute top-[15%] left-[65%] transform -translate-x-1/2">
-             <div className="flex flex-col items-center group cursor-pointer">
-              <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-md group-hover:scale-125 transition-transform"></div>
-              <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded backdrop-blur-sm">晶圓代工 (先進製程)</span>
-            </div>
-          </div>
-
-          <div className="absolute top-[20%] left-[75%] transform -translate-x-1/2">
-             <div className="flex flex-col items-center group cursor-pointer">
-              <div className="w-4 h-4 bg-orange-500 rounded-full border-4 border-white shadow-md group-hover:scale-125 transition-transform"></div>
-              <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded backdrop-blur-sm">PC / NB / 面板</span>
-            </div>
-          </div>
+          {/* Markers */}
+          {industry === Industry.ELECTRONICS ? (
+            <>
+              <div className="absolute top-[75%] left-[20%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-4 h-4 bg-purple-500 rounded-full border-4 border-white shadow-md"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">化合物半導體</span>
+              </div>
+              <div className="absolute top-[40%] left-[45%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-5 h-5 bg-green-500 rounded-full border-4 border-white shadow-md animate-pulse"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">AI 伺服器</span>
+              </div>
+              <div className="absolute top-[15%] left-[65%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">晶圓代工</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="absolute top-[80%] left-[15%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-4 h-4 bg-indigo-500 rounded-full border-4 border-white shadow-md"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">碳權交易/DeFi</span>
+              </div>
+              <div className="absolute top-[45%] left-[40%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-5 h-5 bg-red-500 rounded-full border-4 border-white shadow-md animate-pulse"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">純網銀/電子支付</span>
+              </div>
+               <div className="absolute top-[30%] left-[55%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-5 h-5 bg-emerald-500 rounded-full border-4 border-white shadow-md"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">ETF/財富管理</span>
+              </div>
+              <div className="absolute top-[15%] left-[70%] transform -translate-x-1/2 flex flex-col items-center group cursor-pointer">
+                <div className="w-4 h-4 bg-yellow-600 rounded-full border-4 border-white shadow-md"></div>
+                <span className="mt-2 text-sm font-bold text-slate-700 bg-white/80 px-2 rounded">傳統存放款</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl border-t-4 border-green-500 shadow-sm">
-          <h3 className="font-bold text-lg mb-2">成長期焦點：AI 與車用</h3>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            AI 伺服器供應鏈（散熱、電源、組裝）正處於高速成長期，營收與獲利同步爆發。這也是目前資本市場給予最高本益比的板塊。
-          </p>
-        </div>
-        <div className="bg-white p-6 rounded-xl border-t-4 border-blue-500 shadow-sm">
-          <h3 className="font-bold text-lg mb-2">成熟期轉型：半導體</h3>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            雖然晶圓代工已屬成熟產業，但透過「先進封裝 (CoWoS)」與 2nm 以下製程技術的突破，成功延續了成長曲線（S-Curve），避免進入衰退。
-          </p>
-        </div>
-        <div className="bg-white p-6 rounded-xl border-t-4 border-orange-500 shadow-sm">
-          <h3 className="font-bold text-lg mb-2">成熟期挑戰：消費性電子</h3>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            筆電、手機與面板產業已高度成熟，市場趨於飽和。未來的機會在於「AI PC」帶來的換機潮是否能重啟成長動能。
-          </p>
-        </div>
+        {industry === Industry.ELECTRONICS ? (
+          <>
+            <div className="bg-white p-6 rounded-xl border-t-4 border-green-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成長期焦點：AI</h3>
+              <p className="text-slate-600 text-sm">AI 伺服器供應鏈（散熱、電源）處於高速成長期，享高本益比。</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-t-4 border-blue-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成熟期轉型：半導體</h3>
+              <p className="text-slate-600 text-sm">透過先進封裝與 2nm 技術突破，延續 S-Curve 避免衰退。</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-t-4 border-orange-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成熟期挑戰：消費電</h3>
+              <p className="text-slate-600 text-sm">手機與 PC 市場飽和，期待 AI PC 換機潮。</p>
+            </div>
+          </>
+        ) : (
+          <>
+             <div className="bg-white p-6 rounded-xl border-t-4 border-red-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成長期焦點：數位金融</h3>
+              <p className="text-slate-600 text-sm">純網銀與電子支付用戶數快速增長，但獲利模式仍需驗證。</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-t-4 border-emerald-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成長/成熟：財富管理</h3>
+              <p className="text-slate-600 text-sm">被動元件投資(ETF)大爆發，高資產財管成為銀行新藍海。</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl border-t-4 border-yellow-500 shadow-sm">
+              <h3 className="font-bold text-lg mb-2">成熟期：傳統銀行</h3>
+              <p className="text-slate-600 text-sm">傳統存放款利差業務極度成熟，需靠數位化降低成本維持獲利。</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from 'recharts';
-import { TrendingUp, Landmark, ShieldCheck, Wallet, PieChart, ArrowRight } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { TrendingUp, Landmark, ShieldCheck, Wallet } from 'lucide-react';
 
 const profitData = [
   { name: '富邦金', profit: 660, year: '2023' },
@@ -30,7 +30,7 @@ export const FinanceAnalysis: React.FC = () => {
               <div className="bg-yellow-500/20 p-2 rounded-lg">
                 <Landmark className="text-yellow-400" size={24} />
               </div>
-              <h2 className="text-2xl font-bold">台灣金融保險業分析</h2>
+              <h2 className="text-2xl font-bold">台灣金融保險業總覽</h2>
             </div>
             <p className="text-slate-300 max-w-2xl leading-relaxed">
               聚焦台灣 14 家金控 (Financial Holdings) 營運表現。
@@ -159,50 +159,6 @@ export const FinanceAnalysis: React.FC = () => {
                 <Line type="monotone" dataKey="size" stroke="#eab308" strokeWidth={3} dot={{ r: 4, fill: '#eab308', strokeWidth: 2, stroke: '#fff' }} />
               </LineChart>
             </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* SWOT & Future Summary */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-100">
-           <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-             <PieChart size={20} className="text-indigo-600" />
-             金融業綜合 SWOT 分析
-           </h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100">
-          <div className="p-6">
-            <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-3">Strengths 優勢</span>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>• 高儲蓄率提供充沛資金</li>
-              <li>• 穩定的高殖利率特性 (4-5%)</li>
-              <li>• 數位轉型滲透率高</li>
-            </ul>
-          </div>
-          <div className="p-6">
-            <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-3">Weaknesses 劣勢</span>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>• Over-banking 競爭激烈</li>
-              <li>• 國際化程度落後星港</li>
-              <li>• 獲利過度依賴資本市場波動</li>
-            </ul>
-          </div>
-          <div className="p-6">
-            <span className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold mb-3">Opportunities 機會</span>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>• 高資產財富管理中心政策</li>
-              <li>• 生成式 AI 優化客服與風控</li>
-              <li>• 綠色金融與碳權交易</li>
-            </ul>
-          </div>
-          <div className="p-6">
-            <span className="inline-block px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-xs font-bold mb-3">Threats 威脅</span>
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>• 駭客攻擊與資安風險</li>
-              <li>• 地緣政治影響海外資產評價</li>
-              <li>• 法規監管成本上升 (ESG/法遵)</li>
-            </ul>
           </div>
         </div>
       </div>
